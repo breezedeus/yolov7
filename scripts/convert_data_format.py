@@ -30,30 +30,6 @@ def main():
     os.makedirs(args.output_dir)
     print("Creating dataset:", args.output_dir)
 
-    now = datetime.datetime.now()
-
-    data = dict(
-        info=dict(
-            description=None,
-            url=None,
-            version=None,
-            year=now.year,
-            contributor=None,
-            date_created=now.strftime("%Y-%m-%d %H:%M:%S.%f"),
-        ),
-        licenses=[dict(url=None, id=0, name=None,)],
-        images=[
-            # license, url, file_name, height, width, date_captured, id
-        ],
-        type="instances",
-        annotations=[
-            # segmentation, area, iscrowd, image_id, bbox, category_id, id
-        ],
-        categories=[
-            # supercategory, id, name
-        ],
-    )
-
     class_name_to_id = {}
     for i, line in enumerate(open(args.labels).readlines()):
         class_id = i - 1  # starts with -1

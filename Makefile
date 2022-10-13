@@ -9,6 +9,7 @@ train:
 #	python train_aux.py --workers 8 --device 0 --batch-size 16 --data data/coco.yaml --img 1280 1280 --cfg cfg/training/yolov7-w6.yaml --weights '' --name yolov7-w6 --hyp data/hyp.scratch.p6.yaml
 
 detect:
-	python detect.py --weights yolov7-tiny.pt --conf 0.25 --img-size 640 --source inference/images/horses.jpg
+	#python detect.py --weights yolov7-tiny.pt --conf 0.25 --img-size 640 --source inference/images/horses.jpg
+	python detect.py --no-trace --weights data/CDLA_DATASET/best2.pt --conf 0.25 --img-size 800 --source data/CDLA_DATASET/images/val/val_0646.jpg
 
 .PHONY: train detect

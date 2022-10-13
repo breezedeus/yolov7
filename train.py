@@ -230,7 +230,6 @@ def train(hyp, opt, device, tb_writer=None):
     # Image sizes
     gs = max(int(model.stride.max()), 32)  # grid size (max stride)
     nl = model.model[-1].nl  # number of detection layers (used for scaling hyp['obj'])
-    breakpoint()
     imgsz, imgsz_test = [check_img_size(x, gs) for x in opt.img_size]  # verify imgsz are gs-multiples
 
     # DP mode
@@ -456,7 +455,9 @@ def train(hyp, opt, device, tb_writer=None):
                         'best_fitness': best_fitness,
                         'training_results': results_file.read_text(),
                         'model': deepcopy(model.module if is_parallel(model) else model).half(),
+                        'state_dict': (model.module if is_parallel(model) else model).state_dict(),
                         'ema': deepcopy(ema.ema).half(),
+                        'ema_state_dict': ema.ema.state_dict(),
                         'updates': ema.updates,
                         'optimizer': optimizer.state_dict(),
                         'wandb_id': wandb_logger.wandb_run.id if wandb_logger.wandb else None}
