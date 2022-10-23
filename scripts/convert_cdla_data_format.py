@@ -1,7 +1,5 @@
 # coding: utf-8
 import argparse
-import collections
-import datetime
 import glob
 import json
 import os
