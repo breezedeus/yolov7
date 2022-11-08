@@ -1,9 +1,11 @@
+# coding: utf-8
 # Plotting utils
 
 import glob
 import math
 import os
 import random
+import logging
 from copy import copy
 from pathlib import Path
 
@@ -24,6 +26,8 @@ from utils.metrics import fitness
 # Settings
 matplotlib.rc('font', **{'size': 11})
 matplotlib.use('Agg')  # for writing to files only
+
+logger = logging.getLogger(__name__)
 
 
 def color_list():
@@ -66,6 +70,29 @@ def plot_one_box(x, img, color=None, label=None, line_thickness=3):
         c2 = c1[0] + t_size[0], c1[1] - t_size[1] - 3
         cv2.rectangle(img, c1, c2, color, -1, cv2.LINE_AA)  # filled
         cv2.putText(img, label, (c1[0], c1[1] - 2), 0, tl / 3, [225, 255, 255], thickness=tf, lineType=cv2.LINE_AA)
+
+
+def plot_boxes(img0, boxes, categories, save_path):
+    """可视化目标检测结果。"""
+    img0 = img0.copy()
+    if isinstance(img0, Image.Image):
+        img0 = cv2.cvtColor(np.asarray(img0.convert('RGB')), cv2.COLOR_RGB2BGR)
+
+    colors = [[random.randint(0, 255) for _ in range(3)] for _ in categories]
+    for one_box in boxes:
+        _type = categories[int(one_box[0])]
+        xyxy = one_box[1:]
+        label = f'{_type}'
+        plot_one_box(
+            xyxy,
+            img0,
+            label=label,
+            color=colors[categories.index(_type)],
+            line_thickness=1,
+        )
+
+    cv2.imwrite(save_path, img0)
+    logger.info(f" The image with the result is saved in: {save_path}")
 
 
 def plot_one_box_PIL(box, img, color=None, label=None, line_thickness=None):

@@ -6,7 +6,7 @@ val: data/IBEM_dataset/val.txt
 test: data/IBEM_dataset/val.txt
 
 # number of classes
-nc: 11
+nc: 2
 
 # class names
 names: ['embedding', 'isolated']
