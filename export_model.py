@@ -7,7 +7,7 @@ import torch
 def main():
     parse = argparse.ArgumentParser()
     parse.add_argument('-i', '--model-fp', type=str, default='yolov7.pt', help='model.pt path')
-    parse.add_argument('--no-ema', action='store_false', help='whether to export the EMA model')
+    parse.add_argument('--no-ema', action='store_true', help='whether to export the EMA model')
     parse.add_argument('-o', '--out-model-fp', type=str, required=True, help='exported model path')
     args = parse.parse_args()
 
